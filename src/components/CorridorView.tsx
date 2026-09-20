@@ -149,18 +149,18 @@ export function CorridorView({
         const held = heldByStation.get(s.id) ?? []
         return (
           <g key={s.id}>
-            <line x1={x} y1={UP_Y - 12} x2={x} y2={DN_Y + 12} stroke="rgba(160,180,210,0.45)" strokeWidth={s.isJunction ? 2.5 : 1.4} />
-            <circle cx={x} cy={CENTER_Y} r={s.isJunction ? 5.5 : 4} fill="#0b1422" stroke="#9fb4dd" strokeWidth={1.6} />
-            {s.isJunction && <circle cx={x} cy={CENTER_Y} r={10} fill="none" stroke="rgba(58,160,255,0.4)" strokeWidth={1} />}
-            <text x={x} y={DN_Y + 34} textAnchor="middle" className="fill-ink" fontSize={13} fontFamily="Fira Code" fontWeight={600}>
+            <line x1={x} y1={UP_Y - 12} x2={x} y2={DN_Y + 12} stroke="var(--edge-color)" strokeWidth={s.isJunction ? 2.5 : 1.4} />
+            <circle cx={x} cy={CENTER_Y} r={s.isJunction ? 5.5 : 4} fill="var(--panel-bg)" stroke="var(--ink-color)" strokeWidth={1.6} />
+            {s.isJunction && <circle cx={x} cy={CENTER_Y} r={10} fill="none" stroke="var(--signal-blue)" strokeWidth={1} opacity={0.4} />}
+            <text x={x} y={DN_Y + 32} textAnchor="middle" className="fill-ink" fontSize={12.5} fontFamily="Fira Code" fontWeight={700}>
               {s.code}
             </text>
-            <text x={x} y={DN_Y + 46} textAnchor="middle" className="fill-muted" fontSize={9.5}>
+            <text x={x} y={DN_Y + 44} textAnchor="middle" className="fill-muted" fontSize={9.5} fontFamily="Fira Code" fontWeight={500}>
               {s.km} km
             </text>
             {held.map((t, i) => (
               <g key={t.id}>
-                <line x1={x - 22} y1={DN_Y + 68 + i * 26} x2={x + 22} y2={DN_Y + 68 + i * 26} stroke="rgba(120,140,170,0.35)" strokeWidth={1.2} strokeDasharray="3 3" />
+                <line x1={x - 22} y1={DN_Y + 68 + i * 26} x2={x + 22} y2={DN_Y + 68 + i * 26} stroke="var(--edge-color)" strokeWidth={1.4} strokeDasharray="3 3" />
                 <TrainGlyph x={x} y={DN_Y + 68 + i * 26} t={t} selected={selectedId === t.id} onSelect={onSelect} stationParked playing={playing} speed={speed} />
               </g>
             ))}
@@ -182,12 +182,12 @@ export function CorridorView({
 }
 
 function RailLine({ x1, x2, y, occupied, dir, single }: { x1: number; x2: number; y: number; occupied: boolean; dir: Direction | null; single?: boolean }) {
-  const color = occupied ? (dir === 'UP' ? '#3aa0ff' : '#22d3ee') : single ? 'rgba(58,160,255,0.4)' : 'rgba(120,140,170,0.5)'
+  const color = occupied ? (dir === 'UP' ? 'var(--signal-blue)' : '#0891b2') : single ? '#94a3b8' : '#cbd5e1'
   return (
     <>
-      <line x1={x1} y1={y} x2={x2} y2={y} stroke={color} strokeWidth={occupied ? 3.5 : single ? 3 : 2.2} strokeLinecap="round" className={occupied ? 'glow-blue' : ''} />
+      <line x1={x1} y1={y} x2={x2} y2={y} stroke={color} strokeWidth={occupied ? 3.5 : single ? 2.8 : 2} strokeLinecap="round" className={occupied ? 'glow-blue' : ''} />
       {occupied && (
-        <line x1={x1} y1={y} x2={x2} y2={y} stroke="#eaf4ff" strokeWidth={2} strokeLinecap="round" strokeDasharray="2 11" className="animate-dash" opacity={0.85} />
+        <line x1={x1} y1={y} x2={x2} y2={y} stroke="#ffffff" strokeWidth={1.8} strokeLinecap="round" strokeDasharray="3 10" className="animate-dash" opacity={0.9} />
       )}
     </>
   )
@@ -195,17 +195,17 @@ function RailLine({ x1, x2, y, occupied, dir, single }: { x1: number; x2: number
 
 function ConflictTag({ x, kind, edgeId, conflicts }: { x: number; kind: 'WARN' | 'CRITICAL'; edgeId: string; conflicts: Snapshot['conflicts'] }) {
   const cf = conflicts.find((cc) => cc.resourceId === edgeId)
-  const color = kind === 'CRITICAL' ? '#ff4d4d' : '#ffb02e'
+  const color = kind === 'CRITICAL' ? 'var(--signal-red)' : 'var(--signal-amber)'
   const label = cf
     ? `${cf.kind === 'HEAD_ON' ? 'HEAD-ON' : cf.kind === 'FOLLOWING' ? 'FOLLOWING' : cf.kind} ${Math.max(0, Math.round(cf.etaSec / 60))}m`
     : 'CONFLICT'
   return (
     <g className={kind === 'CRITICAL' ? 'animate-blip' : ''}>
-      <rect x={x - 52} y={6} width={104} height={20} rx={5} fill="rgba(2,6,23,0.94)" stroke={color} />
+      <rect x={x - 52} y={6} width={104} height={20} rx={5} fill="var(--panel-bg)" stroke={color} strokeWidth={1.5} filter="drop-shadow(0 2px 5px rgba(0,0,0,0.08))" />
       <text x={x} y={20} textAnchor="middle" fill={color} fontSize={10.5} fontFamily="Fira Code" fontWeight={700}>
         ⚠ {label}
       </text>
-      <line x1={x} y1={26} x2={x} y2={CENTER_Y - 24} stroke={color} strokeWidth={1} strokeDasharray="2 3" opacity={0.55} />
+      <line x1={x} y1={26} x2={x} y2={CENTER_Y - 24} stroke={color} strokeWidth={1} strokeDasharray="2 3" opacity={0.65} />
     </g>
   )
 }

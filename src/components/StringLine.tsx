@@ -55,8 +55,8 @@ export function StringLine({ snap }: { snap: Snapshot }) {
       {/* station gridlines */}
       {stations.map((s) => (
         <g key={s.id}>
-          <line x1={ML} y1={yOf(s.km)} x2={W - MR} y2={yOf(s.km)} stroke="rgba(120,140,170,0.16)" strokeWidth={1} />
-          <text x={ML - 8} y={yOf(s.km) + 3.5} textAnchor="end" className="fill-muted" fontSize={10} fontFamily="Fira Code">
+          <line x1={ML} y1={yOf(s.km)} x2={W - MR} y2={yOf(s.km)} stroke="var(--edge-color)" strokeWidth={1} strokeOpacity={0.8} />
+          <text x={ML - 8} y={yOf(s.km) + 3.5} textAnchor="end" className="fill-muted font-medium" fontSize={10} fontFamily="Fira Code">
             {s.code}
           </text>
         </g>
@@ -65,8 +65,8 @@ export function StringLine({ snap }: { snap: Snapshot }) {
       {/* time gridlines */}
       {ticks.map((t) => (
         <g key={t}>
-          <line x1={xOf(t)} y1={MT} x2={xOf(t)} y2={H - MB} stroke="rgba(120,140,170,0.1)" strokeWidth={1} />
-          <text x={xOf(t)} y={H - 8} textAnchor="middle" className="fill-muted/70" fontSize={9} fontFamily="Fira Code">
+          <line x1={xOf(t)} y1={MT} x2={xOf(t)} y2={H - MB} stroke="var(--edge-color)" strokeWidth={1} strokeOpacity={0.6} />
+          <text x={xOf(t)} y={H - 8} textAnchor="middle" className="fill-muted font-medium" fontSize={9} fontFamily="Fira Code">
             {clock(t).slice(0, 5)}
           </text>
         </g>
@@ -75,11 +75,11 @@ export function StringLine({ snap }: { snap: Snapshot }) {
       {/* train trajectories */}
       {lines.map((l) => (
         <g key={l.id}>
-          <polyline points={l.d} fill="none" stroke={l.color} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" opacity={l.arrived ? 0.45 : 1} style={{ filter: `drop-shadow(0 0 3px ${l.color}99)` }} />
+          <polyline points={l.d} fill="none" stroke={l.color} strokeWidth={2.2} strokeLinejoin="round" strokeLinecap="round" opacity={l.arrived ? 0.45 : 1} style={{ filter: `drop-shadow(0 0 2px ${l.color}88)` }} />
           {!l.arrived && (
             <>
-              <circle cx={l.lx} cy={l.ly} r={3} fill={l.color} />
-              <text x={l.lx - 5} y={l.ly - 4} textAnchor="end" fill={l.color} fontSize={9} fontFamily="Fira Code" fontWeight={600}>
+              <circle cx={l.lx} cy={l.ly} r={3.5} fill={l.color} />
+              <text x={l.lx - 5} y={l.ly - 4} textAnchor="end" fill={l.color} fontSize={9.5} fontFamily="Fira Code" fontWeight={700}>
                 {l.num}
               </text>
             </>
@@ -88,7 +88,7 @@ export function StringLine({ snap }: { snap: Snapshot }) {
       ))}
 
       {/* now line */}
-      <line x1={xOf(tMax)} y1={MT} x2={xOf(tMax)} y2={H - MB} stroke="#22d37a" strokeWidth={1.4} strokeDasharray="3 3" opacity={0.7} />
+      <line x1={xOf(tMax)} y1={MT} x2={xOf(tMax)} y2={H - MB} stroke="var(--signal-green)" strokeWidth={1.5} strokeDasharray="3 3" opacity={0.85} />
     </svg>
   )
 }

@@ -69,15 +69,15 @@ function NationalMap({ trains, onClick, big }: { trains: TrainPt[]; onClick?: ()
         vectorEffect="non-scaling-stroke"
       />
       <circle cx={ccx} cy={ccy} r={20} fill="none" stroke="rgba(34,211,122,0.4)" strokeWidth={1} vectorEffect="non-scaling-stroke" className="animate-blip" />
-      <polyline points={corridorPath} fill="none" stroke="#22d37a" strokeWidth={big ? 3 : 2} vectorEffect="non-scaling-stroke" style={{ filter: 'drop-shadow(0 0 5px #22d37a)' }} />
+      <polyline points={corridorPath} fill="none" stroke="var(--signal-green)" strokeWidth={big ? 3 : 2} vectorEffect="non-scaling-stroke" style={{ filter: 'drop-shadow(0 0 4px rgba(5,150,105,0.4))' }} />
       {stations.map((s) => (
-        <circle key={s.id} cx={px(s.lon)} cy={py(s.lat)} r={big ? 1.7 : 1.4} fill="#0b1422" stroke="#e6edf7" strokeWidth={1} vectorEffect="non-scaling-stroke" />
+        <circle key={s.id} cx={px(s.lon)} cy={py(s.lat)} r={big ? 1.8 : 1.5} fill="var(--panel-bg)" stroke="var(--ink-color)" strokeWidth={1} vectorEffect="non-scaling-stroke" />
       ))}
-      <line x1={ccx + 20} y1={ccy} x2={W - 64} y2={70} stroke="rgba(34,211,122,0.4)" strokeWidth={0.75} vectorEffect="non-scaling-stroke" />
-      <text x={W - 62} y={64} className="fill-signal-green" fontSize={big ? 6.5 : 8.5} fontFamily="Fira Code">
+      <line x1={ccx + 20} y1={ccy} x2={W - 64} y2={70} stroke="rgba(5,150,105,0.4)" strokeWidth={0.75} vectorEffect="non-scaling-stroke" />
+      <text x={W - 62} y={64} className="fill-signal-green font-bold" fontSize={big ? 6.5 : 8.5} fontFamily="Fira Code">
         Bahanaga Bazar /
       </text>
-      <text x={W - 62} y={74} className="fill-signal-green" fontSize={big ? 6.5 : 8.5} fontFamily="Fira Code">
+      <text x={W - 62} y={74} className="fill-signal-green font-bold" fontSize={big ? 6.5 : 8.5} fontFamily="Fira Code">
         Balasore section
       </text>
       {trains.map((p) => (
@@ -97,12 +97,12 @@ function RouteTrainDot({ x, y, t, side }: { x: number; y: number; t: Snapshot['t
     <g style={{ transform: `translate(${x}px, ${y}px)`, transition: 'transform 0.16s linear' }}>
       <line x1={0} y1={0} x2={left ? -10 : 10} y2={0} stroke={color} strokeWidth={1} opacity={0.6} />
       <g transform={`translate(${left ? -56 : 10}, -10)`}>
-        <rect x={0} y={0} width={46} height={20} rx={5} fill="rgba(2,6,23,0.85)" stroke={color} strokeWidth={1.3} />
-        <text x={23} y={14} textAnchor="middle" fill="#e6edf7" fontSize={11} fontWeight={700} fontFamily="Fira Code">
+        <rect x={0} y={0} width={46} height={20} rx={5} fill="var(--panel-bg)" stroke={color} strokeWidth={1.3} filter="drop-shadow(0 2px 4px rgba(0,0,0,0.1))" />
+        <text x={23} y={14} textAnchor="middle" fill="var(--ink-color)" fontSize={11} fontWeight={700} fontFamily="Fira Code">
           {t.number}
         </text>
       </g>
-      <circle r={6} fill={color} stroke="#02060f" strokeWidth={1.2} style={{ filter: `drop-shadow(0 0 6px ${color})` }} />
+      <circle r={6} fill={color} stroke="var(--panel-bg)" strokeWidth={1.5} style={{ filter: `drop-shadow(0 0 4px ${color}88)` }} />
     </g>
   )
 }
