@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --grid: rgba(58, 160, 255, 0.06);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --spring: linear(0, 0.006, 0.083 4.8%, 0.32 11%, 0.56, 0.77, 0.94 32%, 1.02, 1.06 41%, 1.06, 1.04, 1.01 58%, 0.999, 1);
+}
+
+/* tactile press feedback on every control */
+button {
+  transition: transform 0.12s var(--ease-out), background-color 0.16s var(--ease-standard),
+    border-color 0.16s var(--ease-standard), color 0.16s var(--ease-standard);
+}
+button:active {
+  transform: scale(0.97);
+}
+
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.panel-in { animation: panelIn 0.45s var(--ease-out) both; }
+
+@keyframes flashPop {
+  from { opacity: 0; transform: scale(0.93); }
+  to { opacity: 1; transform: scale(1); }
+}
+.flash-pop { animation: flashPop 0.5s var(--spring) both; }
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-color: #020617;
+  /* faint engineering grid + corner glows = control-room atmosphere */
+  background-image:
+    radial-gradient(1100px 620px at 82% -8%, rgba(34, 211, 122, 0.07), transparent 60%),
+    radial-gradient(900px 560px at -6% 108%, rgba(58, 160, 255, 0.07), transparent 55%),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: auto, auto, 44px 44px, 44px 44px;
+  color: #e6edf7;
+  font-family: 'Fira Sans', ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 0.01em;
+}
+
+*::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #233252;
+  border-radius: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-family: 'Fira Code', ui-monospace, monospace;
+}
+
+/* Signal glows */
+.glow-green { filter: drop-shadow(0 0 6px rgba(34, 211, 122, 0.85)); }
+.glow-amber { filter: drop-shadow(0 0 6px rgba(255, 176, 46, 0.85)); }
+.glow-red { filter: drop-shadow(0 0 7px rgba(255, 77, 77, 0.95)); }
+.glow-blue { filter: drop-shadow(0 0 6px rgba(58, 160, 255, 0.8)); }
+
+.text-glow { text-shadow: 0 0 12px currentColor; }
+
+/* Panel chrome */
+.panel-card {
+  background: linear-gradient(180deg, rgba(19, 28, 46, 0.92), rgba(13, 19, 32, 0.92));
+  border: 1px solid rgba(31, 44, 68, 0.9);
+  border-radius: 0.75rem;
+  backdrop-filter: blur(6px);
+}
+.hairline { border-color: rgba(31, 44, 68, 0.9); }
+
+/* elevation tiers: raised (hero / glass-box) sits forward, recessed (ambient) sits back */
+.panel-raised {
+  background: linear-gradient(180deg, rgba(23, 34, 56, 0.96), rgba(14, 22, 39, 0.96));
+  border: 1px solid rgba(58, 110, 180, 0.32);
+  border-radius: 0.8rem;
+  box-shadow: 0 12px 44px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.panel-recessed {
+  background: rgba(7, 12, 22, 0.55);
+  border: 1px solid rgba(31, 44, 68, 0.6);
+  border-radius: 0.75rem;
+}
+
+@keyframes blip {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+.animate-blip { animation: blip 1.05s ease-in-out infinite; }
+
+@keyframes dash {
+  to { stroke-dashoffset: -16; }
+}
+.animate-dash { animation: dash 0.9s linear infinite; }
+
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-rise { animation: riseIn 0.32s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
