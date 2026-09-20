@@ -22,8 +22,8 @@ export function Topbar({
     <header className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b hairline bg-panel/85 px-4 py-2.5 shadow-sm backdrop-blur-md transition-colors">
       {/* brand */}
       <div className="flex items-center gap-3">
-        <div className="grid h-10 w-10 place-items-center rounded-xl bg-signal-green/10 ring-1 ring-signal-green/30 shadow-sm">
-          <Logo size={26} />
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/90 dark:bg-slate-800/90 ring-1 ring-edge shadow-sm overflow-hidden p-1 transition-all hover:ring-cyan-500/40">
+          <Logo size={36} />
         </div>
         <div className="leading-tight">
           <div className="flex items-baseline gap-2">
